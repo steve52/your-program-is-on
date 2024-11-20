@@ -1,10 +1,13 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import prisma from "./lib/prisma";
 
-export default function Home() {
+export default async function Home() {
+  const users = await prisma.user.findMany()
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        {JSON.stringify(users, null, 2)}
         <Image
           className={styles.logo}
           src="/next.svg"
