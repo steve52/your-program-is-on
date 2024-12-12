@@ -13,7 +13,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id Int        @id
-  name String
+model Movie {
+  id           Int         @id @default(autoincrement())
+  title        String
+  year         String
+  rated        String
+  released     String
+  runtime      String
+  genre        String
+  director     String
+  writer       String
+  actors       String
+  plot         String
+  language     String
+  country      String
+  awards       String
+  poster       String
+  imdbRating   String
+  imdbVotes    String
+  imdbID       String       @unique
+  rottenRating String
+  metascore    String
+  watchlist    Boolean      @default(false)
+  watchListOrder Int?
+  watched      Boolean      @default(false)
 }

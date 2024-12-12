@@ -1,0 +1,17 @@
+.card {
+  display: flex;
+  gap: 10px;
+  margin: 10px;
+  border-bottom: 1px solid;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.poster {
+  width: 128px;
+  height: auto;
+  object-fit: contain;
+}
