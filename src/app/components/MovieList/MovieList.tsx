@@ -1,7 +1,5 @@
-import Image from "next/image";
-import { Movie } from "@prisma/client";
 import styles from "./movieList.module.css";
-import { getAllWatchlistMovies, updateMovie } from "@/actions/actions";
+import { getAllWatchlistMovies } from "@/actions/actions";
 import MovieCard from "../MovieCard/MovieCard";
 
 const MovieList: React.FC = async () => {

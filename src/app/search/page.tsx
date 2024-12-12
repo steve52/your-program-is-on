@@ -1,10 +1,9 @@
 'use client'
 
-import { getAllSavedMovies, search } from "@/actions/actions";
-import { ChangeEventHandler, FormEventHandler, useEffect, useState } from "react";
+import { search } from "@/actions/actions";
+import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import ResultList from "./ResultList";
 import { MovieAPI } from "@/types/types";
-import { Movie } from "@prisma/client";
 
 export default function Page() {
   const [searchTerm, setSearchTerm] = useState("");

@@ -5,8 +5,8 @@ import { MovieAPI } from "@/types/types";
 import { Movie } from "@prisma/client";
 
 const convertToMovieModel = (movie: MovieAPI): Omit<Movie, 'id'> => {
-  let ratingObj = movie.Ratings.find(m => m.Source === 'Rotten Tomatoes');
-  let rottenRating = ratingObj ? ratingObj.Value : 'N/A';
+  const ratingObj = movie.Ratings.find(m => m.Source === 'Rotten Tomatoes');
+  const rottenRating = ratingObj ? ratingObj.Value : 'N/A';
   return {
     title: movie.Title,
     year: movie.Year,
@@ -70,7 +70,7 @@ export async function search(searchTerm: string): Promise<MovieAPI[]> {
 
   const res = await response.json()
 
-  let searchResults: MovieAPI[]  = res.Search || [];
+  const searchResults: MovieAPI[]  = res.Search || [];
 
   const moviePromises = searchResults.map(async (movie) => {
     const baseUrl = 'https://www.omdbapi.com';
