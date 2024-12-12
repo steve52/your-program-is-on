@@ -9,17 +9,18 @@ type MovieCardProps = {
 };
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie, index }) => {
-  console.log('~~~ render MovieCard')
   return (
     <div className={styles.card}>
       {index}
-      <Image
-        src={movie.poster}
-        alt=""
-        width="75"
-        height="111"
-        className={styles.poster}
-      />
+      {movie.poster.includes("http") && (
+        <Image
+          src={movie.poster}
+          alt=""
+          width="75"
+          height="111"
+          className={styles.poster}
+        />
+      )}
       <div>
         <div className={styles.title}>
           {movie.title} ({movie.year})

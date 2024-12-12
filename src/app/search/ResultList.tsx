@@ -52,13 +52,15 @@ const ResultList: React.FC<ResultProps> = ({ results }) => {
         return (
           <div className={styles.card} key={movie.imdbID}>
             {index}
-            <Image
-              src={movie.Poster}
-              alt=""
-              width="75"
-              height="111"
-              className={styles.poster}
-            />
+            {movie.Poster.includes("http") && (
+              <Image
+                src={movie.Poster}
+                alt=""
+                width="75"
+                height="111"
+                className={styles.poster}
+              />
+            )}
             <div>
               <div className={styles.title}>
                 {movie.Title} ({movie.Year})
