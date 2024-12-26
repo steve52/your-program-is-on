@@ -2,6 +2,7 @@
 import { updateMovie } from "@/actions/actions";
 import { Movie } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import styles from "./watchlistbutton.module.css";
 
 type WatchlistButtonProps = {
   movie: Movie;
@@ -18,9 +19,13 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({ movie }) => {
   return (
     <>
       {movie.watchlist ? (
-        <button onClick={toggleWatchlist}>Remove from watchlist</button>
+        <button className={styles.button} onClick={toggleWatchlist}>
+          <img src="./remove.svg" />
+        </button>
       ) : (
-        <button onClick={toggleWatchlist}>Add to watchlist</button>
+        <button className={styles.button} onClick={toggleWatchlist}>
+          <img src="./add.svg" />
+        </button>
       )}
     </>
   );
