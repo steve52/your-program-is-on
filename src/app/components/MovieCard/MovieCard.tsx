@@ -55,7 +55,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, index }) => {
       {/* -------------- FOOTER -------------- */}
       <div className={styles.footer}>
         <button className={styles.rate_button}>Rate</button>
-        <UserRating rating={2}/>
+        <UserRating movie={movie} rating={movie.userRating} />
         <div className={styles.footer_right_buttons}>
           <WatchlistButton movie={movie} />
         </div>

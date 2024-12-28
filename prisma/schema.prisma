@@ -34,6 +34,7 @@ model Movie {
   imdbID       String       @unique
   rottenRating String
   metascore    String
+  userRating   Int?
   watchlist    Boolean      @default(false)
   watchListOrder Int?
   watched      Boolean      @default(false)

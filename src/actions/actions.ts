@@ -27,6 +27,7 @@ const convertToMovieModel = (movie: MovieAPI): Omit<Movie, 'id'> => {
     imdbID: movie.imdbID,
     rottenRating: rottenRating,
     metascore: movie.Metascore,
+    userRating: null,
     watched: false,
     watchListOrder: null,
     watchlist: false
