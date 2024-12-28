@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import { Movie } from "@prisma/client";
 import styles from "./movieCard.module.css";
 import WatchlistButton from "./WatchlistButton";
 import UserRating from "./UserRating";
+import { useState } from "react";
 
 type MovieCardProps = {
   movie: Movie;
@@ -10,6 +13,12 @@ type MovieCardProps = {
 };
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie, index }) => {
+  let [showRating, setShowRating] = useState(!!movie.userRating);
+
+  const handleRateBtnClick = () => {
+    setShowRating(true);
+  };
+
   return (
     <div className={styles.card}>
       {/* -------------- POSTER -------------- */}
@@ -54,8 +63,15 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, index }) => {
 
       {/* -------------- FOOTER -------------- */}
       <div className={styles.footer}>
-        <button className={styles.rate_button}>Rate</button>
-        <UserRating movie={movie} rating={movie.userRating} />
+        <div className={styles.rate}>
+          {!showRating && (
+            <button className={styles.rate_button} onClick={handleRateBtnClick}>
+              Rate
+            </button>
+          )}
+          {showRating && <UserRating movie={movie} rating={movie.userRating} />}
+        </div>
+
         <div className={styles.footer_right_buttons}>
           <WatchlistButton movie={movie} />
         </div>

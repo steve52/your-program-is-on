@@ -1,6 +1,7 @@
 :root {
   --background: #DEE5F6;
   --foreground: #171717;
+  --secondary-text-color: rgba(0, 0, 0, 0.6);
 }
 
 html,

@@ -100,6 +100,8 @@
 }
 
 .plot {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
   color: var(--secondary-text-color);
   margin: 0 24px;
 }
@@ -108,15 +110,20 @@
   /* background-color: cadetblue; */
   display: flex;
   align-items: center;
-  padding: 8px;
+  padding: 8px 8px 8px 24px;
 }
 
 .footer_right_buttons {
   margin-left: auto;
 }
 
+.rate {
+  display: flex;
+  align-items: center;
+}
+
 .rate_button {
-  font-size: 1.143rem; /* 14px */
+  font-size: 0.875rem; /* 14px */
   font-weight: 500;
   line-height: 1.5rem; /* 24px */
   letter-spacing: 0.01em;
@@ -124,7 +131,5 @@
   color: #6200E8;
   border: 0;
   background-color: #fff;
-  width: 4rem; /* 64 */
   height: 2.25rem; /* 36 */
-  margin-top: 4px;
 }
