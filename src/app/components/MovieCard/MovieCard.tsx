@@ -12,6 +12,45 @@ type MovieCardProps = {
   index: number;
 };
 
+type TrunctatedTextProps = {
+  className: string;
+  text: string;
+};
+
+const truncatedText = (text: string, numChars: number): string => {
+  return text.substring(0, numChars) + "...";
+};
+const TruncatedText: React.FC<TrunctatedTextProps> = ({ className, text }) => {
+  const tooLong = text.length > 184;
+  const [showAll, setShowAll] = useState(!tooLong);
+  const toggleShowAll = () => {
+    setShowAll(!showAll);
+  };
+  return (
+    <>
+      <p className={className}>
+        {!tooLong && <>{text}</>}
+        {tooLong &&
+          (showAll ? (
+            <>
+              {text}&nbsp;
+              <button className={styles.readmore} onClick={toggleShowAll}>
+                less
+              </button>
+            </>
+          ) : (
+            <>
+              {truncatedText(text, 184)}
+              <button className={styles.readmore} onClick={toggleShowAll}>
+                more.
+              </button>
+            </>
+          ))}
+      </p>
+    </>
+  );
+};
+
 const MovieCard: React.FC<MovieCardProps> = ({ movie, index }) => {
   let [showRating, setShowRating] = useState(!!movie.userRating);
 
@@ -59,7 +98,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, index }) => {
       </div>
 
       {/* -------------- PLOT -------------- */}
-      <p className={styles.plot}>{movie.plot}</p>
+      <TruncatedText className={styles.plot} text={movie.plot}></TruncatedText>
 
       {/* -------------- FOOTER -------------- */}
       <div className={styles.footer}>
