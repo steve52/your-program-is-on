@@ -1,5 +1,6 @@
 .button {
   display: flex;
+  cursor: pointer;
   width: 2rem; /* 32px */
   height: 2rem; /* 32px */
   border-width: 0;

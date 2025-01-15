@@ -123,6 +123,7 @@
 }
 
 .rate_button {
+  cursor: pointer;
   font-size: 0.875rem; /* 14px */
   font-weight: 500;
   line-height: 1.5rem; /* 24px */
