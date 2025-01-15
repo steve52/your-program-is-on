@@ -17,15 +17,15 @@ const UserRating: React.FC<UserRatingProps> = ({ movie, rating }) => {
 
   const popcorns = [];
 
-  const handleOnMouseEnter: MouseEventHandler<HTMLImageElement> = (e) => {
+  const handleOnMouseEnter: MouseEventHandler<HTMLButtonElement> = (e) => {
     setFauxRating(Number(e.currentTarget.dataset["position"]));
   };
 
-  const handleOnMouseLeave: MouseEventHandler<HTMLImageElement> = (e) => {
+  const handleOnMouseLeave: MouseEventHandler<HTMLButtonElement> = (e) => {
     setFauxRating(0);
   };
 
-  const handleOnClick: MouseEventHandler<HTMLImageElement> = (e) => {
+  const handleOnClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     const rating = e.currentTarget.dataset["position"];
     if (!rating) {
       console.warn("Img element missing data-position value");
@@ -37,31 +37,20 @@ const UserRating: React.FC<UserRatingProps> = ({ movie, rating }) => {
   };
 
   for (let x = 1; x <= 5; x++) {
-    if ((!fauxRating && rating && x <= rating) || x <= fauxRating) {
-      popcorns.push(
-        <img
-          src="./popcorn.svg"
-          key={x}
-          data-position={x}
-          className={style.slot}
-          onMouseEnter={handleOnMouseEnter}
-          onMouseLeave={handleOnMouseLeave}
-          onClick={handleOnClick}
-        />
-      );
-    } else {
-      popcorns.push(
-        <img
-          src="./popcorn_empty.svg"
-          key={x}
-          data-position={x}
-          className={style.slot}
-          onMouseEnter={handleOnMouseEnter}
-          onMouseLeave={handleOnMouseLeave}
-          onClick={handleOnClick}
-        />
-      );
-    }
+    const showFilled = (!fauxRating && rating && x <= rating) || x <= fauxRating;
+    console.log(x)
+    const className = `${style.slot} ${showFilled ? style.slotFilled : ''}`;
+
+    popcorns.push(
+      <button
+        key={x}
+        data-position={x}
+        className={className}
+        onMouseEnter={handleOnMouseEnter}
+        onMouseLeave={handleOnMouseLeave}
+        onClick={handleOnClick}
+      />
+    );
   }
   return <div className={style.popcorns}>{popcorns}</div>;
 };
