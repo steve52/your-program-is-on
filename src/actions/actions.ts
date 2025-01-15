@@ -65,7 +65,7 @@ export async function addMovie(movie: MovieAPI, data: Partial<Movie>) {
 
 // Search for movies usimg hte OMDB API
 export async function search(searchTerm: string): Promise<MovieAPI[]> {
-  const url = `http://www.omdbapi.com?apikey=${process.env.OMDB_API_KEY}&s=${searchTerm}&plot=short`;
+  const url = `http://www.omdbapi.com?apikey=${process.env.OMDB_API_KEY}&s=${searchTerm}&plot=full`;
 
   const response = await fetch(url)
 
