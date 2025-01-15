@@ -31,14 +31,12 @@ const UserRating: React.FC<UserRatingProps> = ({ movie, rating }) => {
       console.warn("Img element missing data-position value");
       return;
     }
-    console.log({ rating });
     updateMovie(movie, { userRating: Number(rating) });
     router.refresh();
   };
 
   for (let x = 1; x <= 5; x++) {
     const showFilled = (!fauxRating && rating && x <= rating) || x <= fauxRating;
-    console.log(x)
     const className = `${style.slot} ${showFilled ? style.slotFilled : ''}`;
 
     popcorns.push(
