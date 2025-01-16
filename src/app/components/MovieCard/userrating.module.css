@@ -1,13 +1,13 @@
 
 .slot {
-  --rating-button-padding: 8px;
+  --rating-button-padding: 16px;
   --rating-button-width: 24px;
   cursor: pointer;
   width: calc(var(--rating-button-width) + var(--rating-button-padding)); /* 31px; */
   height: 35px; /* 37px; */
-  margin-right: 8px;
   background: none;
   background-repeat: no-repeat;
+  background-position: center;
   background-image: url("/popcorn_empty.svg");
   border: 0;
 }
