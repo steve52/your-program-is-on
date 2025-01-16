@@ -3,15 +3,10 @@
 .card {
   width: 21.375rem; /* 342px */
   min-height: 29.375rem; /* 470px; */
-  /* display: flex;
-  flex-direction: column; */
-  /* gap: 10px;
-  margin: 10px;
-  border-bottom: 1px solid; */
   font-family: "Space Grotesk", sans-serif;
   font-optical-sizing: auto;
   background: #fff;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
   border-radius: 4px;
   position: relative;
 }
