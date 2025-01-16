@@ -6,6 +6,8 @@ import styles from "./movieCard.module.css";
 import WatchlistButton from "./WatchlistButton";
 import UserRating from "./UserRating";
 import { useState } from "react";
+import { moveDownWatchList, moveUpWatchList } from "@/actions/actions";
+import { useRouter } from "next/navigation";
 
 type MovieCardProps = {
   movie: Movie;
@@ -52,10 +54,21 @@ const TruncatedText: React.FC<TrunctatedTextProps> = ({ className, text }) => {
 };
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie, index }) => {
+  const router = useRouter();
   let [showRating, setShowRating] = useState(!!movie.userRating);
 
   const handleRateBtnClick = () => {
     setShowRating(true);
+  };
+
+  const handleMoveDown = async () => {
+    await moveDownWatchList(movie);
+    router.refresh();
+  };
+
+  const handleMoveUp = async () => {
+    await moveUpWatchList(movie);
+    router.refresh();
   };
 
   return (
@@ -70,7 +83,14 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, index }) => {
           className={styles.poster}
         />
       )}
-
+      <div className={styles.sortControls}>
+        <button className={styles.sortArrow} onClick={handleMoveDown}>
+          <Image src="down.svg" alt="" width="24" height="24" />
+        </button>
+        <button className={styles.sortArrow} onClick={handleMoveUp}>
+          <Image src="up.svg" alt="" width="24" height="24" />
+        </button>
+      </div>
       {/* -------------- HEADER -------------- */}
       <div className={styles.header}>
         <div className={styles.index}>{index}</div>

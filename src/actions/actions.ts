@@ -68,6 +68,88 @@ export async function addMovie(movie: MovieAPI, data: Partial<Movie>) {
 }
 
 
+export async function moveUpWatchList(movie: Movie) {
+  if (!movie.watchListOrder) {
+    console.error("There was an error updating movie. No current watchListOrder was found.")
+    return;
+  }
+
+  const movies = await getAllWatchlistMovies();
+  if (movies) {
+    const movieIndex = movies.findIndex(m => m.id === movie.id);
+    if (movieIndex === 0) {
+      console.warn("Already highest ranked movie.");
+      return;
+    }
+    const higherMovie = movies[movieIndex - 1];
+    const oldRank = movie.watchListOrder;
+    const newRank = higherMovie.watchListOrder;
+    return await prisma.$transaction([
+      prisma.movie.update({
+        where: {
+          id: movie.id
+        },
+        data: {watchListOrder: null}
+      }),
+      prisma.movie.update({
+        where: {
+          id: higherMovie.id
+        },
+        data: {watchListOrder: oldRank}
+      }),
+      prisma.movie.update({
+        where: {
+          id: movie.id
+        },
+        data: {watchListOrder: newRank}
+      })
+    ])
+  } else {
+    console.error("There was an error fetching watchlist movies")
+  }
+}
+
+export async function moveDownWatchList(movie: Movie) {
+  if (!movie.watchListOrder) {
+    console.error("There was an error updating movie. No current watchListOrder was found.")
+    return;
+  }
+
+  const movies = await getAllWatchlistMovies();
+  if (movies) {
+    const movieIndex = movies.findIndex(m => m.id === movie.id);
+    if (movieIndex === movies.length - 1) {
+      console.warn("Already lowest ranked movie.");
+      return;
+    }
+    const lowerMovie = movies[movieIndex + 1];
+    const oldRank = movie.watchListOrder;
+    const newRank = lowerMovie.watchListOrder;
+    return await prisma.$transaction([
+      prisma.movie.update({
+        where: {
+          id: movie.id
+        },
+        data: {watchListOrder: null}
+      }),
+      prisma.movie.update({
+        where: {
+          id: lowerMovie.id
+        },
+        data: {watchListOrder: oldRank}
+      }),
+      prisma.movie.update({
+        where: {
+          id: movie.id
+        },
+        data: {watchListOrder: newRank}
+      })
+    ])
+  } else {
+    console.error("There was an error fetching watchlist movies")
+  }
+}
+
 export async function updateMovieOrder(movie: Movie, newOrder: number) {
 
 }
@@ -79,6 +161,8 @@ export async function toggleWatchlist(movie: Movie) {
     addMovieToWatchlist(movie);
   }
 }
+
+
 
 export async function addMovieToWatchlist(movie: Movie) {
   const movies = await getAllWatchlistMovies();

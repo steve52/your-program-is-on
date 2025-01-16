@@ -13,6 +13,22 @@
   background: #fff;
   margin-bottom: 20px;
   border-radius: 4px;
+  position: relative;
+}
+
+.sortControls {
+  position: absolute;
+  top: 0;
+  left: 1rem; /* 16px */
+}
+
+.sortArrow {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  margin-right: .75rem; /* 12px */
+  margin-top: .25rem; /* 4px */
+
 }
 
 .poster {
