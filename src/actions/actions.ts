@@ -39,8 +39,12 @@ export async function getAllWatchlistMovies() {
     where: {
       watchlist: true,
     },
+    orderBy: {
+      watchListOrder: 'asc'
+    }
   });
 }
+
 export async function getAllSavedMovies() {
   return await prisma.movie.findMany();
 }
@@ -62,6 +66,39 @@ export async function addMovie(movie: MovieAPI, data: Partial<Movie>) {
     data: {...newMovie, ...data}
   })
 }
+
+
+export async function updateMovieOrder(movie: Movie, newOrder: number) {
+
+}
+
+export async function toggleWatchlist(movie: Movie) {
+  if (movie.watchlist) {
+    removeMovieFromWatchlist(movie)
+  } else {
+    addMovieToWatchlist(movie);
+  }
+}
+
+export async function addMovieToWatchlist(movie: Movie) {
+  const movies = await getAllWatchlistMovies();
+  if (movies) {
+    const lastMovie = movies[movies.length - 1];
+    const lastMovieRank = lastMovie.watchListOrder;
+    if (lastMovieRank) {
+      return updateMovie(movie, {watchlist: true, watchListOrder: lastMovieRank + 1});
+    } else {
+      console.error(`Couldn't update movie. Missing watchListOrder field on movie with id:${lastMovie.id}`)
+    }
+  } else {
+    return updateMovie(movie, {watchlist: true, watchListOrder: 1});
+  }
+}
+
+export async function removeMovieFromWatchlist(movie: Movie) {
+  return updateMovie(movie, {watchlist: false, watchListOrder: null});
+}
+
 
 // Search for movies usimg hte OMDB API
 export async function search(searchTerm: string): Promise<MovieAPI[]> {

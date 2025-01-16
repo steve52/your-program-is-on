@@ -7,7 +7,7 @@ const MovieList: React.FC = async () => {
   console.log('~~~ movies', movies);
   return (
     <div className={styles.movielist}>
-      {movies.slice(0, 10).map((movie, i) => {
+      {movies.map((movie, i) => {
         return <MovieCard key={movie.imdbID} movie={movie} index={i} />;
       })}
     </div>
