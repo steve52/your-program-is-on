@@ -36,6 +36,6 @@ model Movie {
   metascore    String
   userRating   Int?
   watchlist    Boolean      @default(false)
-  watchListOrder Int?
+  watchListOrder Int?       @unique
   watched      Boolean      @default(false)
 }
