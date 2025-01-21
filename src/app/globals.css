@@ -20,16 +20,12 @@ body {
   margin: 0;
 }
 
-nav {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  text-align: center;
-}
+/*
 
 nav a {
   font-size: 2rem;
   margin: 0 1rem;
-}
+} */
 
 .sr-only {
   clip: rect(0 0 0 0);
