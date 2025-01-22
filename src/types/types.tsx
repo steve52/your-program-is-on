@@ -27,3 +27,5 @@ export type OMDBMovie = {
   Website: string
   Response: string
 }
+
+export type UnsavedMovie = Omit<Movie, "id">
