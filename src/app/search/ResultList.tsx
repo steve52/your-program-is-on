@@ -1,4 +1,4 @@
-import { MovieAPI } from "@/types/types";
+import { OMDBMovie } from "@/types/types";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { addMovie, getAllSavedMovies, updateMovie } from "@/actions/actions";
@@ -6,7 +6,7 @@ import { Movie } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 type ResultProps = {
-  results: MovieAPI[];
+  results: OMDBMovie[];
 };
 
 const ResultList: React.FC<ResultProps> = ({ results }) => {
@@ -31,7 +31,7 @@ const ResultList: React.FC<ResultProps> = ({ results }) => {
     setSavedMovies(newSavedMovies);
   };
 
-  const addToWatchlist = async (movie: MovieAPI, savedMovie?: Movie) => {
+  const addToWatchlist = async (movie: OMDBMovie, savedMovie?: Movie) => {
     if (savedMovie) {
       toggleWatchlist(savedMovie)
     } else {

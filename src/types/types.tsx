@@ -1,4 +1,6 @@
-export type MovieAPI = {
+import { Movie } from "@prisma/client"
+
+export type OMDBMovie = {
   Title: string
   Year: string
   Rated: string

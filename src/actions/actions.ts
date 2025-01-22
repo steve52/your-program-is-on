@@ -1,10 +1,10 @@
 'use server';
 
 import prisma from "@/lib/prisma";
-import { MovieAPI } from "@/types/types";
+import { OMDBMovie } from "@/types/types";
 import { Movie } from "@prisma/client";
 
-const convertToMovieModel = (movie: MovieAPI): Omit<Movie, 'id'> => {
+const convertToMovieModel = (movie: OMDBMovie): Omit<Movie, 'id'> => {
   const ratingObj = movie.Ratings.find(m => m.Source === 'Rotten Tomatoes');
   const rottenRating = ratingObj ? ratingObj.Value : 'N/A';
   return {
@@ -59,7 +59,7 @@ export async function updateMovie(movie: Movie, data: Partial<Movie>) {
   })
 }
 
-export async function addMovie(movie: MovieAPI, data: Partial<Movie>) {
+export async function addMovie(movie: OMDBMovie, data: Partial<Movie>) {
   console.log('~~ add movie', movie)
   const newMovie = convertToMovieModel(movie)
   return prisma.movie.create({
@@ -185,14 +185,14 @@ export async function removeMovieFromWatchlist(movie: Movie) {
 
 
 // Search for movies usimg hte OMDB API
-export async function search(searchTerm: string): Promise<MovieAPI[]> {
+export async function search(searchTerm: string): Promise<OMDBMovie[]> {
   const url = `http://www.omdbapi.com?apikey=${process.env.OMDB_API_KEY}&s=${searchTerm}&plot=full`;
 
   const response = await fetch(url)
 
   const res = await response.json()
 
-  const searchResults: MovieAPI[]  = res.Search || [];
+  const searchResults: OMDBMovie[]  = res.Search || [];
 
   const moviePromises = searchResults.map(async (movie) => {
     const baseUrl = 'https://www.omdbapi.com';
