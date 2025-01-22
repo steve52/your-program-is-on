@@ -1,23 +1,48 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import FilterIcon from "../Icons/FIlterIcon";
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  useEffect,
+  useState,
+} from "react";
 import MenuIcon from "../Icons/MenuIcon";
 import SearchIcon from "../Icons/SearchIcon";
-import SortIcon from "../Icons/SortIcon";
 import styles from "./header.module.css";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+
+import { useSearchParams } from "next/navigation";
+
+const SearchInput: React.FC = () => {
+  return <input className={styles.searchInput} />;
+};
 
 const Header: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const title = searchParams.get("title");
 
   useEffect(() => {
     setShowMenu(false);
+    setSearchTerm("");
   }, [pathname]);
 
   const searchPage = pathname === "/search";
+
+  const handleSearch: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    router.push(`${pathname}?title=${searchTerm}`);
+  };
+
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    console.log("handlechange", e.target.value);
+    setSearchTerm(e.target.value);
+  };
 
   return (
     <>
@@ -32,15 +57,17 @@ const Header: React.FC = () => {
         </button>
         <div className={styles.pageName}>my list</div>
         {pathname === "/search" && (
-          <div className={styles.searchWrapper}>
-            <input className={styles.searchInput} />
-            <button
-              className={`${styles.button} ${styles.searchButton}`}
-              onClick={() => {}}
-            >
+          <form className={styles.searchWrapper} onSubmit={handleSearch}>
+            <input
+              className={styles.searchInput}
+              name="title"
+              onChange={handleInputChange}
+              value={searchTerm || title || ""}
+            />
+            <button className={`${styles.button} ${styles.searchButton}`}>
               <SearchIcon />
             </button>
-          </div>
+          </form>
         )}
         {showMenu && (
           <nav className={styles.nav}>
