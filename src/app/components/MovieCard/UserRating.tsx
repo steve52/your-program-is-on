@@ -6,6 +6,7 @@ import { addMovie, addUnsavedMovie, updateMovie } from "@/actions/actions";
 import { useRouter } from "next/navigation";
 import { Movie } from "@prisma/client";
 import { UnsavedMovie } from "@/types/types";
+import { isSavedMovie } from "@/utils";
 
 type UserRatingProps = {
   movie: Movie | UnsavedMovie;
@@ -32,7 +33,7 @@ const UserRating: React.FC<UserRatingProps> = ({ movie, rating }) => {
       console.warn("Img element missing data-position value");
       return;
     }
-    if ("id" in movie) {
+    if (isSavedMovie(movie)) {
       await updateMovie(movie, { userRating: Number(rating) });
     } else {
       await addUnsavedMovie(movie, { userRating: Number(rating) });

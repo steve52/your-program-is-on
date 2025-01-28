@@ -9,6 +9,7 @@ import { useState } from "react";
 import { moveDownWatchList, moveUpWatchList } from "@/actions/actions";
 import { useRouter } from "next/navigation";
 import { UnsavedMovie } from "@/types/types";
+import { isSavedMovie } from "@/utils";
 
 type MovieCardProps = {
   movie: Movie | UnsavedMovie;
@@ -59,20 +60,19 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, index, isWatchList }) => {
   const router = useRouter();
   let [showRating, setShowRating] = useState(!!movie.userRating);
 
-  const isSavedMovie = "id" in movie;
 
   const handleRateBtnClick = () => {
     setShowRating(true);
   };
 
   const handleMoveDown = async () => {
-    if (!isSavedMovie) return;
+    if (!isSavedMovie(movie)) return;
     await moveDownWatchList(movie);
     router.refresh();
   };
 
   const handleMoveUp = async () => {
-    if (!isSavedMovie) return;
+    if (!isSavedMovie(movie)) return;
     await moveUpWatchList(movie);
     router.refresh();
   };

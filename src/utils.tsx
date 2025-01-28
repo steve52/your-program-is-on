@@ -38,3 +38,15 @@ export const convertToMovieModel = (movie: OMDBMovie): Movie | UnsavedMovie => {
     watchlist: false,
   };
 };
+
+/**
+ *
+ * Returns true/false whether the movie is in the database or not.
+ * It does this but checking if it has an id yet.
+ *
+ * @param {Movie | UnsavedMovie} movie
+ * @returns {boolean}
+ */
+export const isSavedMovie = (movie: Movie | UnsavedMovie) => {
+  return "id" in movie;
+}
