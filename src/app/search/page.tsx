@@ -1,35 +1,20 @@
-'use client'
-
-import { search } from "@/actions/actions";
-import { useEffect, useState } from "react";
+import { getAllSavedMovies } from "@/actions/actions";
 import ResultList from "./ResultList";
-import { OMDBMovie } from "@/types/types";
-import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function Page() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchResults, setSearchResults] = useState<OMDBMovie[]>([]);
-  const searchParams = useSearchParams();
-
-  const title = searchParams.get('title')
-  useEffect(() => {
-    const searchOMDBMovie = async () => {
-      if (title) {
-        setIsLoading(true);
-        const data = await search(title);
-        setIsLoading(false);
-        setSearchResults(data);
-      }
-    }
-    searchOMDBMovie();
-  }, [title]);
-
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Record<string, any>;
+}) {
+  const params = await searchParams;
+  const savedMovies = await getAllSavedMovies();
 
   return (
     <>
-      {isLoading && "Loading Results..."}
-      <ResultList results={searchResults} />
+      <Suspense key={params.title} fallback="Loading...">
+        <ResultList savedMovies={savedMovies} title={params.title} />
+      </Suspense>
     </>
   );
 }
