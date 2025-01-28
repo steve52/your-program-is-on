@@ -1,8 +1,10 @@
 type SearchIconProps = {
   fillOpacity?: number;
+  className?: string;
 };
 
 const SearchIcon: React.FC<SearchIconProps> = ({
+  className,
   fillOpacity = 0.6,
 }) => {
   return (
@@ -12,6 +14,7 @@ const SearchIcon: React.FC<SearchIconProps> = ({
       viewBox="0 0 18 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         fillRule="evenodd"

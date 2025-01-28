@@ -67,7 +67,7 @@ const Header: React.FC = () => {
               value={searchTerm || title || ""}
             />
             <button className={`${styles.button} ${styles.searchButton}`}>
-              <SearchIcon />
+              <SearchIcon className="searchIcon"/>
             </button>
           </form>
         )}

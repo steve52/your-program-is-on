@@ -1,9 +1,11 @@
 type MenuIconProps = {
   fillColor?: string;
   fillOpacity?: number;
+  className?: string;
 };
 
 const MenuIcon: React.FC<MenuIconProps> = ({
+  className,
   fillColor = "black",
   fillOpacity = 0.6,
 }) => {
@@ -14,6 +16,7 @@ const MenuIcon: React.FC<MenuIconProps> = ({
       viewBox="0 0 18 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         fillRule="evenodd"

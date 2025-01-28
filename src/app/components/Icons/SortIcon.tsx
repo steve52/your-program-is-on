@@ -1,9 +1,12 @@
 type SortIconProps = {
   fillColor?: string;
   fillOpacity?: number;
+
+  className?: string;
 };
 
 const SortIcon: React.FC<SortIconProps> = ({
+  className,
   fillColor = "black",
   fillOpacity = 0.6,
 }) => {
@@ -14,6 +17,7 @@ const SortIcon: React.FC<SortIconProps> = ({
       viewBox="0 0 18 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         fillRule="evenodd"

@@ -1,8 +1,13 @@
 type FilterIconProps = {
   fillColor?: string;
+
+  className?: string;
 };
 
-const FilterIcon: React.FC<FilterIconProps> = ({ fillColor = "#666666" }) => {
+const FilterIcon: React.FC<FilterIconProps> = ({
+  className,
+  fillColor = "#666666",
+}) => {
   return (
     <svg
       width="18"
@@ -10,6 +15,7 @@ const FilterIcon: React.FC<FilterIconProps> = ({ fillColor = "#666666" }) => {
       viewBox="0 0 18 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         d="M0 0C2.01 2.59 7 9 7 9V16H11V9C11 9 15.98 2.59 18 0H0Z"

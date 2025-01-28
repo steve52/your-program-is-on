@@ -55,7 +55,7 @@
   .searchButton {
     margin: 0 calc(1rem - 7px);
     color: #5E04DE;
-    svg path {
+    svg.searchIcon path {
       fill-opacity: 1;
     }
   }
