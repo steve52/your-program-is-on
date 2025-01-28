@@ -1,5 +1,5 @@
 "use client";
-import { addUnsavedMovie, addUnsavedMovieToWatchlist, toggleWatchlist } from "@/actions/actions";
+import { addUnsavedMovieToWatchlist, toggleWatchlist } from "@/actions/actions";
 import { Movie } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import styles from "./watchlistbutton.module.css";
