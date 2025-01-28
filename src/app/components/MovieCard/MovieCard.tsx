@@ -8,10 +8,12 @@ import UserRating from "./UserRating";
 import { useState } from "react";
 import { moveDownWatchList, moveUpWatchList } from "@/actions/actions";
 import { useRouter } from "next/navigation";
+import { UnsavedMovie } from "@/types/types";
 
 type MovieCardProps = {
-  movie: Movie;
-  index: number;
+  movie: Movie | UnsavedMovie;
+  index?: number;
+  isWatchList?: true;
 };
 
 type TrunctatedTextProps = {
@@ -53,20 +55,24 @@ const TruncatedText: React.FC<TrunctatedTextProps> = ({ className, text }) => {
   );
 };
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, index }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ movie, index, isWatchList }) => {
   const router = useRouter();
   let [showRating, setShowRating] = useState(!!movie.userRating);
+
+  const isSavedMovie = "id" in movie;
 
   const handleRateBtnClick = () => {
     setShowRating(true);
   };
 
   const handleMoveDown = async () => {
+    if (!isSavedMovie) return;
     await moveDownWatchList(movie);
     router.refresh();
   };
 
   const handleMoveUp = async () => {
+    if (!isSavedMovie) return;
     await moveUpWatchList(movie);
     router.refresh();
   };
@@ -83,17 +89,20 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, index }) => {
           className={styles.poster}
         />
       )}
-      <div className={styles.sortControls}>
-        <button className={styles.sortArrow} onClick={handleMoveDown}>
-          <Image src="down.svg" alt="" width="24" height="24" />
-        </button>
-        <button className={styles.sortArrow} onClick={handleMoveUp}>
-          <Image src="up.svg" alt="" width="24" height="24" />
-        </button>
-      </div>
+      {isWatchList && (
+        <div className={styles.sortControls}>
+          <button className={styles.sortArrow} onClick={handleMoveDown}>
+            <Image src="down.svg" alt="" width="24" height="24" />
+          </button>
+          <button className={styles.sortArrow} onClick={handleMoveUp}>
+            <Image src="up.svg" alt="" width="24" height="24" />
+          </button>
+        </div>
+      )}
+
       {/* -------------- HEADER -------------- */}
       <div className={styles.header}>
-        <div className={styles.index}>{index}</div>
+        {isWatchList && <div className={styles.index}>{index}</div>}
         <div className={styles.title_and_info}>
           <div className={styles.title}>{movie.title}</div>
           <div className={styles.info}>

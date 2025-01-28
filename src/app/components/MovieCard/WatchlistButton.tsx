@@ -1,18 +1,23 @@
 "use client";
-import { toggleWatchlist } from "@/actions/actions";
+import { addUnsavedMovie, addUnsavedMovieToWatchlist, toggleWatchlist } from "@/actions/actions";
 import { Movie } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import styles from "./watchlistbutton.module.css";
+import { UnsavedMovie } from "@/types/types";
 
 type WatchlistButtonProps = {
-  movie: Movie;
+  movie: Movie | UnsavedMovie;
 };
 
 const WatchlistButton: React.FC<WatchlistButtonProps> = ({ movie }) => {
   const router = useRouter();
 
   const handleToggleWatchlist = async () => {
-    await toggleWatchlist(movie);
+    if ("id" in movie) {
+      await toggleWatchlist(movie);
+    } else {
+      await addUnsavedMovieToWatchlist(movie);
+    }
     router.refresh();
   };
 

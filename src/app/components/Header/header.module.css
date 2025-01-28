@@ -97,6 +97,7 @@
 
 .menuButton {
   margin-left: 1rem; /* 16px */
+  cursor: pointer;
 }
 
 .filterButton {
@@ -109,4 +110,5 @@
 
 .searchButton {
   margin-right: 1rem; /* 16px */
+  cursor: pointer;
 }

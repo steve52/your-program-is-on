@@ -4,11 +4,11 @@ import MovieCard from "../MovieCard/MovieCard";
 
 const MovieList: React.FC = async () => {
   const movies = await getAllWatchlistMovies();
-  console.log('~~~ movies', movies);
+
   return (
     <div className={styles.movielist}>
       {movies.map((movie, i) => {
-        return <MovieCard key={movie.imdbID} movie={movie} index={i} />;
+        return <MovieCard key={movie.imdbID} movie={movie} index={i} isWatchList={true} />;
       })}
     </div>
   );

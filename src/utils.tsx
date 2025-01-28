@@ -1,9 +1,17 @@
 import { Movie } from "@prisma/client";
-import { OMDBMovie } from "./types/types";
+import { OMDBMovie, UnsavedMovie } from "./types/types";
 
-export const convertToMovieModel = (movie: OMDBMovie): Omit<Movie, 'id'> => {
-  const ratingObj = movie.Ratings.find(m => m.Source === 'Rotten Tomatoes');
-  const rottenRating = ratingObj ? ratingObj.Value : 'N/A';
+/**
+ * Converts a movie returned from the OMDB API to a model for saving
+ * in my database
+ *
+ * @param {OMDBMovie} movie
+ * @returns {UnsavedMovie}
+ */
+export const convertToMovieModel = (movie: OMDBMovie): Movie | UnsavedMovie => {
+  const ratingObj = movie.Ratings.find((m) => m.Source === "Rotten Tomatoes");
+  const rottenRating = ratingObj ? ratingObj.Value : "N/A";
+
   return {
     title: movie.Title,
     year: movie.Year,
@@ -27,6 +35,6 @@ export const convertToMovieModel = (movie: OMDBMovie): Omit<Movie, 'id'> => {
     userRating: null,
     watched: false,
     watchListOrder: null,
-    watchlist: false
-  }
-}
+    watchlist: false,
+  };
+};

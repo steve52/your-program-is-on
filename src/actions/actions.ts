@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from "@/lib/prisma";
-import { OMDBMovie } from "@/types/types";
+import { OMDBMovie, UnsavedMovie } from "@/types/types";
 import { convertToMovieModel } from "@/utils";
 import { Movie } from "@prisma/client";
 
@@ -35,6 +35,12 @@ export async function addMovie(movie: OMDBMovie, data: Partial<Movie>) {
   const newMovie = convertToMovieModel(movie)
   return prisma.movie.create({
     data: {...newMovie, ...data}
+  })
+}
+
+export async function addUnsavedMovie(movie: UnsavedMovie, data?: Partial<Movie>) {
+  return prisma.movie.create({
+    data: {...movie, ...data}
   })
 }
 
@@ -134,6 +140,10 @@ export async function toggleWatchlist(movie: Movie) {
 }
 
 
+export async function addUnsavedMovieToWatchlist(movie: UnsavedMovie) {
+  const savedMovie = await addUnsavedMovie(movie);
+  return addMovieToWatchlist(savedMovie);
+}
 
 export async function addMovieToWatchlist(movie: Movie) {
   const movies = await getAllWatchlistMovies();
