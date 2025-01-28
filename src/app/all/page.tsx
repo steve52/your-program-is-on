@@ -1,22 +1,18 @@
-import MovieCard from "../components/MovieCard/MovieCard";
-import styles from "./page.module.css";
+import { Suspense } from "react";
+import MovieList from "../components/MovieList/MovieList";
 import { getAllSavedMovies } from "@/actions/actions";
 
-export default async function Page() {
+const SavedMovieList = async () => {
   const movies = await getAllSavedMovies();
+  return <MovieList movies={movies} isWatchList={false} />;
+};
 
+export default async function Page() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <div className={styles.movielist}>
-          {movies
-            .sort((a, b) => a.title.localeCompare(b.title))
-            .slice(0, 10)
-            .map((movie, i) => (
-              <MovieCard key={movie.id} movie={movie} index={i} />
-            ))}
-        </div>
-      </main>
-    </div>
+    <main>
+      <Suspense fallback={"Loading..."}>
+        <SavedMovieList />
+      </Suspense>
+    </main>
   );
 }

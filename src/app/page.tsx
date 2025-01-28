@@ -1,11 +1,17 @@
+import { getAllWatchlistMovies } from "@/actions/actions";
 import MovieList from "./components/MovieList/MovieList";
 import { Suspense } from "react";
-import styles from "./page.module.css";
+
+const WatchlistMovieList = async () => {
+  const movies = await getAllWatchlistMovies();
+  return <MovieList movies={movies} isWatchList={true} />;
+};
+
 const Home = () => {
   return (
-    <main className={styles.main}>
-      <Suspense fallback={"Sorry there are not movies"}>
-        <MovieList />
+    <main>
+      <Suspense fallback={"Loading..."}>
+        <WatchlistMovieList />
       </Suspense>
     </main>
   );

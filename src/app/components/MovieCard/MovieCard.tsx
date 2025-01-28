@@ -14,7 +14,7 @@ import { isSavedMovie } from "@/utils";
 type MovieCardProps = {
   movie: Movie | UnsavedMovie;
   index?: number;
-  isWatchList?: true;
+  isWatchList: boolean;
 };
 
 type TrunctatedTextProps = {

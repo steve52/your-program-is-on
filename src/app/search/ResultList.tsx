@@ -12,12 +12,13 @@ type ResultProps = {
 const ResultList: React.FC<ResultProps> = async ({ savedMovies, title }) => {
   let searchResults: OMDBMovie[] = [];
   if (title) {
-    searchResults = []
+    searchResults = [];
     searchResults = await search(title);
   }
 
   return (
     <>
+      {title && !searchResults.length && "Sorry there are no matching search results."}
       {searchResults.map((movieResult, index) => {
         const savedMovie = savedMovies.find(
           (m) => m.imdbID === movieResult.imdbID
@@ -26,7 +27,14 @@ const ResultList: React.FC<ResultProps> = async ({ savedMovies, title }) => {
           ? savedMovie
           : convertToMovieModel(movieResult);
 
-        return <MovieCard movie={movie} index={index} key={movie.imdbID} />;
+        return (
+          <MovieCard
+            movie={movie}
+            index={index}
+            key={movie.imdbID}
+            isWatchList={false}
+          />
+        );
       })}
     </>
   );

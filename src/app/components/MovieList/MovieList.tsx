@@ -1,14 +1,24 @@
 import styles from "./movieList.module.css";
-import { getAllWatchlistMovies } from "@/actions/actions";
 import MovieCard from "../MovieCard/MovieCard";
+import { Movie } from "@prisma/client";
 
-const MovieList: React.FC = async () => {
-  const movies = await getAllWatchlistMovies();
+type MovieListProps = {
+  movies: Movie[];
+  isWatchList: boolean;
+};
 
+const MovieList: React.FC<MovieListProps> = async ({ movies, isWatchList }) => {
   return (
     <div className={styles.movielist}>
       {movies.map((movie, i) => {
-        return <MovieCard key={movie.imdbID} movie={movie} index={i} isWatchList={true} />;
+        return (
+          <MovieCard
+            key={movie.imdbID}
+            movie={movie}
+            index={i}
+            isWatchList={isWatchList}
+          />
+        );
       })}
     </div>
   );

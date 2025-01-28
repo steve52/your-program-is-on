@@ -40,7 +40,6 @@ const Header: React.FC = () => {
   };
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    console.log("handlechange", e.target.value);
     setSearchTerm(e.target.value);
   };
 
@@ -55,7 +54,8 @@ const Header: React.FC = () => {
         >
           <MenuIcon />
         </button>
-        <div className={styles.pageName}>my list</div>
+        {pathname === "/" && <div className={styles.pageName}>my list</div>}
+        {pathname === "/all" && <div className={styles.pageName}>all my movies</div>}
         {pathname === "/search" && (
           <form className={styles.searchWrapper} onSubmit={handleSearch}>
             <input
@@ -80,6 +80,16 @@ const Header: React.FC = () => {
               }}
             >
               View My List
+            </Link>
+            <Link
+              href={"/all"}
+              aria-disabled={pathname === "/all"}
+              className={pathname === "/all" ? styles.disabledLink : ""}
+              onClick={(e) => {
+                if (pathname === "/all") e.preventDefault();
+              }}
+            >
+              View All My Movies
             </Link>
             <Link
               href={"/search"}
