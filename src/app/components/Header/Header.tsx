@@ -55,7 +55,9 @@ const Header: React.FC = () => {
           <MenuIcon />
         </button>
         {pathname === "/" && <div className={styles.pageName}>my list</div>}
-        {pathname === "/all" && <div className={styles.pageName}>all my movies</div>}
+        {pathname === "/all" && (
+          <div className={styles.pageName}>all my movies</div>
+        )}
         {pathname === "/search" && (
           <form className={styles.searchWrapper} onSubmit={handleSearch}>
             <input
@@ -74,7 +76,9 @@ const Header: React.FC = () => {
             <Link
               href={"/"}
               aria-disabled={pathname === "/"}
-              className={pathname === "/" ? styles.disabledLink : ""}
+              className={`${styles.navLink} ${
+                pathname === "/" ? styles.disabledLink : ""
+              }`}
               onClick={(e) => {
                 if (pathname === "/") e.preventDefault();
               }}
@@ -84,7 +88,9 @@ const Header: React.FC = () => {
             <Link
               href={"/all"}
               aria-disabled={pathname === "/all"}
-              className={pathname === "/all" ? styles.disabledLink : ""}
+              className={`${styles.navLink} ${
+                pathname === "/all" ? styles.disabledLink : ""
+              }`}
               onClick={(e) => {
                 if (pathname === "/all") e.preventDefault();
               }}
@@ -94,7 +100,10 @@ const Header: React.FC = () => {
             <Link
               href={"/search"}
               aria-disabled={pathname === "/search"}
-              className={pathname === "/search" ? styles.disabledLink : ""}
+              className={`
+                ${styles.navLink} ${
+                pathname === "/search" ? styles.disabledLink : ""
+              }`}
               onClick={(e) => {
                 if (pathname === "/search") e.preventDefault();
               }}
