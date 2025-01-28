@@ -127,9 +127,9 @@ export async function moveDownWatchList(movie: Movie) {
   }
 }
 
-export async function updateMovieOrder(movie: Movie, newOrder: number) {
+// export async function updateMovieOrder(movie: Movie, newOrder: number) {
 
-}
+// }
 
 export async function toggleWatchlist(movie: Movie) {
   if (movie.watchlist) {

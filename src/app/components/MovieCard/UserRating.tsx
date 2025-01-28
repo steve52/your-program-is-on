@@ -2,7 +2,7 @@
 
 import { MouseEventHandler, useState } from "react";
 import style from "./userrating.module.css";
-import { addMovie, addUnsavedMovie, updateMovie } from "@/actions/actions";
+import { addUnsavedMovie, updateMovie } from "@/actions/actions";
 import { useRouter } from "next/navigation";
 import { Movie } from "@prisma/client";
 import { UnsavedMovie } from "@/types/types";
@@ -14,7 +14,7 @@ type UserRatingProps = {
 };
 
 const UserRating: React.FC<UserRatingProps> = ({ movie, rating }) => {
-  let [fauxRating, setFauxRating] = useState(0);
+  const [fauxRating, setFauxRating] = useState(0);
   const router = useRouter();
 
   const popcorns = [];
@@ -23,7 +23,7 @@ const UserRating: React.FC<UserRatingProps> = ({ movie, rating }) => {
     setFauxRating(Number(e.currentTarget.dataset["position"]));
   };
 
-  const handleOnMouseLeave: MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleOnMouseLeave: MouseEventHandler<HTMLButtonElement> = () => {
     setFauxRating(0);
   };
 

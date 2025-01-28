@@ -11,12 +11,7 @@ import SearchIcon from "../Icons/SearchIcon";
 import styles from "./header.module.css";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-
 import { useSearchParams } from "next/navigation";
-
-const SearchInput: React.FC = () => {
-  return <input className={styles.searchInput} />;
-};
 
 const Header: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
