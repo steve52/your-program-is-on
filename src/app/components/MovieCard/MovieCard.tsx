@@ -58,8 +58,9 @@ const TruncatedText: React.FC<TrunctatedTextProps> = ({ className, text }) => {
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie, index, isWatchList }) => {
   const router = useRouter();
-  const [showRating, setShowRating] = useState(!!movie.userRating);
-
+  const [showRating, setShowRating] = useState(
+    isSavedMovie(movie) ? !!movie.userRating : false
+  );
 
   const handleRateBtnClick = () => {
     setShowRating(true);
