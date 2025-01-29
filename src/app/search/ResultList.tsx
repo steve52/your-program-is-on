@@ -16,7 +16,7 @@ const ResultList: React.FC<ResultProps> = async ({ savedMovies, title }) => {
     searchResults = await search(title);
   }
 
-  const movies = searchResults.map((movieResult, index) => {
+  const movies = searchResults.map((movieResult) => {
     const savedMovie = savedMovies.find((m) => m.imdbID === movieResult.imdbID);
     const movie = savedMovie ? savedMovie : convertToMovieModel(movieResult);
     return movie;
