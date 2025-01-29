@@ -26,11 +26,11 @@ const WatchlistButton: React.FC<WatchlistButtonProps> = ({ movie }) => {
     <>
       {movie.watchlist ? (
         <button className={styles.button} onClick={handleToggleWatchlist}>
-          <img src="./remove.svg" />
+          <img src="./remove.svg" alt="Remove from Watchlist"/>
         </button>
       ) : (
         <button className={styles.button} onClick={handleToggleWatchlist}>
-          <img src="./add.svg" />
+          <img src="./add.svg"  alt="Add from Watchlist"/>
         </button>
       )}
     </>
