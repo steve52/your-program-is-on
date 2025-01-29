@@ -3,6 +3,7 @@
 import {
   ChangeEventHandler,
   FormEventHandler,
+  Suspense,
   useEffect,
   useState,
 } from "react";
@@ -13,21 +14,17 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-const Header: React.FC = () => {
-  const [showMenu, setShowMenu] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const router = useRouter();
-  const pathname = usePathname();
+const SearchBar = () => {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
 
+  const [searchTerm, setSearchTerm] = useState("");
   const title = searchParams.get("title");
 
   useEffect(() => {
-    setShowMenu(false);
-    setSearchTerm("");
+    setSearchTerm(title || "");
   }, [pathname]);
-
-  const searchPage = pathname === "/search";
 
   const handleSearch: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -37,6 +34,31 @@ const Header: React.FC = () => {
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setSearchTerm(e.target.value);
   };
+
+  return (
+    <form className={styles.searchWrapper} onSubmit={handleSearch}>
+      <input
+        className={styles.searchInput}
+        name="title"
+        onChange={handleInputChange}
+        value={searchTerm}
+      />
+      <button className={`${styles.button} ${styles.searchButton}`}>
+        <SearchIcon className="searchIcon" />
+      </button>
+    </form>
+  );
+};
+
+const Header: React.FC = () => {
+  const [showMenu, setShowMenu] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setShowMenu(false);
+  }, [pathname]);
+
+  const searchPage = pathname === "/search";
 
   return (
     <>
@@ -54,17 +76,9 @@ const Header: React.FC = () => {
           <div className={styles.pageName}>all my movies</div>
         )}
         {pathname === "/search" && (
-          <form className={styles.searchWrapper} onSubmit={handleSearch}>
-            <input
-              className={styles.searchInput}
-              name="title"
-              onChange={handleInputChange}
-              value={searchTerm || title || ""}
-            />
-            <button className={`${styles.button} ${styles.searchButton}`}>
-              <SearchIcon className="searchIcon"/>
-            </button>
-          </form>
+          <Suspense>
+            <SearchBar />
+          </Suspense>
         )}
         {showMenu && (
           <nav className={styles.nav}>
