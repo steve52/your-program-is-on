@@ -1,9 +1,10 @@
 import styles from "./movieList.module.css";
 import MovieCard from "../MovieCard/MovieCard";
 import { Movie } from "@prisma/client";
+import { UnsavedMovie } from "@/types/types";
 
 type MovieListProps = {
-  movies: Movie[];
+  movies: (Movie | UnsavedMovie)[];
   isWatchList: boolean;
 };
 
