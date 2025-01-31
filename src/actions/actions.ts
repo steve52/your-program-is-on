@@ -147,7 +147,7 @@ export async function addUnsavedMovieToWatchlist(movie: UnsavedMovie) {
 
 export async function addMovieToWatchlist(movie: Movie) {
   const movies = await getAllWatchlistMovies();
-  if (movies) {
+  if (movies.length) {
     const lastMovie = movies[movies.length - 1];
     const lastMovieRank = lastMovie.watchListOrder;
     if (lastMovieRank) {
