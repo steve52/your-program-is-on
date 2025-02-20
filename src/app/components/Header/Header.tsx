@@ -24,7 +24,7 @@ const SearchBar = () => {
 
   useEffect(() => {
     setSearchTerm(title || "");
-  }, [pathname]);
+  }, [pathname, title]);
 
   const handleSearch: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
