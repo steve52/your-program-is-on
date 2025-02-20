@@ -1,17 +1,13 @@
-import { getAllWatchlistMovies } from "@/actions/actions";
 import MovieList from "./components/MovieList/MovieList";
-import { Suspense } from "react";
+import { Suspense, } from "react";
+import { getAllWatchlistMovies } from "@/actions/actions";
 
-const WatchlistMovieList = async () => {
+const Home = async () => {
   const movies = await getAllWatchlistMovies();
-  return <MovieList movies={movies} isWatchList={true} />;
-};
-
-const Home = () => {
   return (
     <main>
       <Suspense fallback={"Loading..."}>
-        <WatchlistMovieList />
+        <MovieList movies={movies} isWatchList={true} />
       </Suspense>
     </main>
   );

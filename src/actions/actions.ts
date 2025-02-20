@@ -4,8 +4,10 @@ import prisma from "@/lib/prisma";
 import { OMDBMovie, UnsavedMovie } from "@/types/types";
 import { convertToMovieModel } from "@/utils";
 import { Movie } from "@prisma/client";
+import { revalidatePath } from 'next/cache';
 
 export async function getAllWatchlistMovies() {
+  console.log('~~~ GET ALL WATCHLIST MOVIES')
   return await prisma.movie.findMany({
     where: {
       watchlist: true,
@@ -17,31 +19,44 @@ export async function getAllWatchlistMovies() {
 }
 
 export async function getAllSavedMovies() {
-  return await prisma.movie.findMany();
+  return await prisma.movie.findMany({
+    orderBy:{
+      id: 'desc'
+    }
+  });
 }
 
 export async function updateMovie(movie: Movie, data: Partial<Movie>) {
   console.log('~~ update movie', movie, data)
-  return await prisma.movie.update({
+  const updatedMovie = await prisma.movie.update({
     where: {
       id: movie.id
     },
     data: data
   })
+
+  revalidatePath('/', 'layout')
+  return updatedMovie;
 }
 
 export async function addMovie(movie: OMDBMovie, data: Partial<Movie>) {
   console.log('~~ add movie', movie)
   const newMovie = convertToMovieModel(movie)
-  return prisma.movie.create({
+  const addedMovie = await prisma.movie.create({
     data: {...newMovie, ...data}
   })
+
+  revalidatePath('/', 'layout')
+  return addedMovie;
 }
 
 export async function addUnsavedMovie(movie: UnsavedMovie, data?: Partial<Movie>) {
-  return prisma.movie.create({
+  const addedMovie = await prisma.movie.create({
     data: {...movie, ...data}
   })
+
+  revalidatePath('/', 'layout')
+  return addedMovie;
 }
 
 
@@ -61,7 +76,7 @@ export async function moveUpWatchList(movie: Movie) {
     const higherMovie = movies[movieIndex - 1];
     const oldRank = movie.watchListOrder;
     const newRank = higherMovie.watchListOrder;
-    return await prisma.$transaction([
+    const updatedMovie = await prisma.$transaction([
       prisma.movie.update({
         where: {
           id: movie.id
@@ -81,6 +96,9 @@ export async function moveUpWatchList(movie: Movie) {
         data: {watchListOrder: newRank}
       })
     ])
+
+    revalidatePath('/', 'layout')
+    return updatedMovie;
   } else {
     console.error("There was an error fetching watchlist movies")
   }
@@ -102,7 +120,7 @@ export async function moveDownWatchList(movie: Movie) {
     const lowerMovie = movies[movieIndex + 1];
     const oldRank = movie.watchListOrder;
     const newRank = lowerMovie.watchListOrder;
-    return await prisma.$transaction([
+    const updatedMovie = await prisma.$transaction([
       prisma.movie.update({
         where: {
           id: movie.id
@@ -122,6 +140,9 @@ export async function moveDownWatchList(movie: Movie) {
         data: {watchListOrder: newRank}
       })
     ])
+
+    revalidatePath('/', 'layout')
+    return updatedMovie;
   } else {
     console.error("There was an error fetching watchlist movies")
   }
@@ -133,9 +154,9 @@ export async function moveDownWatchList(movie: Movie) {
 
 export async function toggleWatchlist(movie: Movie) {
   if (movie.watchlist) {
-    removeMovieFromWatchlist(movie)
+    await removeMovieFromWatchlist(movie)
   } else {
-    addMovieToWatchlist(movie);
+    await addMovieToWatchlist(movie);
   }
 }
 
